@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import DragAndDropContainer from '../components/DragAndDropContainer';
 import FileIcon from '../components/FileIcon';
-import { addFiles, getFileList, SavedFile } from '../core/file-manager';
+import { addFiles, SavedFile } from '../core/file-manager';
 import useFolder from '../hooks/useFolder';
 
 const FileContainer = styled.div`
@@ -13,12 +13,7 @@ const FileContainer = styled.div`
 `;
 
 const FilesList: React.FC = () => {
-  const [files, setFiles] = useState(getFileList());
-  const folderTimestamp = useFolder();
-
-  useEffect(() => {
-    setFiles(getFileList());
-  }, [folderTimestamp]);
+  const { files } = useFolder();
 
   const renderFile = (file: SavedFile, i: number) => {
     return (

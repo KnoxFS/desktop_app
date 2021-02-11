@@ -6,8 +6,8 @@ export interface SavedFile {
   isDirectory: boolean;
 }
 
-export const getFileList = (): SavedFile[] => {
-  const dirent = fs.readdirSync(config.userDataFolder, { withFileTypes: true });
+export const getFileList = (path = config.userDataFolder): SavedFile[] => {
+  const dirent = fs.readdirSync(path, { withFileTypes: true });
 
   return dirent
     .filter((e) => e.name[0] !== '.')
