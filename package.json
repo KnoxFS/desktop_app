@@ -2,26 +2,39 @@
   "name": "knox-desktop-putget",
   "version": "0.1.0",
   "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
   "dependencies": {
+    "@craco/craco": "^6.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "app-root-dir": "^1.0.2",
+    "appdata-path": "^1.0.0",
+    "bootstrap": "^4.6.0",
+    "electron-is-dev": "^1.2.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "fs-extra": "^9.1.0",
+    "graceful-fs": "^4.2.6",
+    "lodash": "^4.17.20",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
     "react-scripts": "4.0.1",
+    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
+    "electron": "wait-on tcp:3000 && electron-forge start",
+    "package": "react-scripts build && electron-forge package",
+    "make": "react-scripts build && electron-forge make",
+    "lint": "eslint 'src/**/*.js*'"
   },
   "browserslist": {
     "production": [
@@ -34,5 +47,66 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.25",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "concurrently": "^5.3.0",
+    "electron": "^11.2.0",
+    "electron-devtools-installer": "^3.1.1",
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-meienberger-react-typescript": "^1.0.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-json-format": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "typescript": "^4.1.4",
+    "wait-on": "^5.2.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "src/icons/mac/icon.icns",
+        "name": "KnoxFS Demo"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "knox_desktop_putget"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
