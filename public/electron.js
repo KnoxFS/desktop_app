@@ -1,5 +1,5 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 
 let installExtension, REACT_DEVELOPER_TOOLS;
@@ -13,6 +13,13 @@ if (isDev) {
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
+
+ipcMain.on('ondragstart', (event, filePath) => {
+  event.sender.startDrag({
+    file: filePath,
+    icon: `${path.join(__dirname)}/logo192.png`,
+  });
+});
 
 function createWindow() {
   // Create the browser window.

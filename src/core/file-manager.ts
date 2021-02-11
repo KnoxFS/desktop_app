@@ -4,6 +4,7 @@ import config from './config';
 export interface SavedFile {
   name: string;
   isDirectory: boolean;
+  path?: string;
 }
 
 export const getFileList = (path = config.userDataFolder): SavedFile[] => {
@@ -12,7 +13,11 @@ export const getFileList = (path = config.userDataFolder): SavedFile[] => {
   return dirent
     .filter((e) => e.name[0] !== '.')
     .map((e) => {
-      return { name: e.name, isDirectory: e.isDirectory() };
+      return {
+        name: e.name,
+        isDirectory: e.isDirectory(),
+        path: `${path}/${e.name}`,
+      };
     });
 };
 

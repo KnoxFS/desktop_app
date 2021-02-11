@@ -26,7 +26,9 @@ const useFolder = (
   }, [path]);
 
   useEffect(() => {
-    watchFiles();
+    setInterval(() => {
+      watchFiles();
+    }, 1000);
   }, [watchFiles]);
 
   return { timestamp, files };
