@@ -1,4 +1,5 @@
 const path = require('path');
+const url = require('url');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 
@@ -28,6 +29,8 @@ function createWindow() {
     minHeight: 600,
     width: 800,
     height: 600,
+    title: 'KnoxFS',
+    icon: path.join(__dirname, 'icons/mac/logo.png'),
     webPreferences: {
       nodeIntegration: true,
     },
@@ -35,14 +38,20 @@ function createWindow() {
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  win.loadURL(
-    isDev
-      ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../build/index.html')}`
-  );
-
-  // Open the DevTools.
   if (isDev) {
+    win.loadURL('http://localhost:3000');
+  } else {
+    win.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'build/index.html'),
+        protocol: 'file:',
+        slashes: true,
+      })
+    );
+  }
+
+  if (isDev) {
+    // Open the DevTools.
     win.webContents.openDevTools({ mode: 'detach' });
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FcApproval, FcFolder, FcShare } from 'react-icons/fc';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../res/img/logo-dark.png';
 import StorageProgress from './StorageProgress';
@@ -7,6 +8,7 @@ import StorageProgress from './StorageProgress';
 interface NavItemType {
   title: string;
   logo: JSX.Element;
+  path: string;
 }
 
 interface SelectedProps {
@@ -61,19 +63,23 @@ const Selected = styled.div<SelectedProps>`
 `;
 
 const NAV_ITEMS: NavItemType[] = [
-  { title: 'My Files', logo: <FcFolder /> },
-  { title: 'Shared with me', logo: <FcShare /> },
-  { title: 'Account', logo: <FcApproval /> },
+  { title: 'My Files', logo: <FcFolder />, path: '/' },
+  { title: 'Shared with me', logo: <FcShare />, path: '/shared' },
+  { title: 'Account', logo: <FcApproval />, path: '/account' },
 ];
 
 const SideNav: React.FC = () => {
+  const location = useLocation();
+
   const renderNavItem = (item: NavItemType, index: number) => {
     return (
-      <NavItem key={index}>
-        <Selected isActive={index === 0} />
-        <NavItemLogo>{item.logo}</NavItemLogo>
-        <NavItemTitle>{item.title}</NavItemTitle>
-      </NavItem>
+      <Link to={item.path}>
+        <NavItem key={index}>
+          <Selected isActive={item.path === location.pathname} />
+          <NavItemLogo>{item.logo}</NavItemLogo>
+          <NavItemTitle>{item.title}</NavItemTitle>
+        </NavItem>
+      </Link>
     );
   };
 

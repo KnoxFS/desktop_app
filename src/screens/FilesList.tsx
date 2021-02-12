@@ -1,6 +1,7 @@
 import React from 'react';
 import DragAndDropContainer from '../components/DragAndDropContainer';
 import FileCell from '../components/FileCell';
+import Layout from '../components/Layout';
 import { addFiles, SavedFile } from '../core/file-manager';
 import useFolder from '../hooks/useFolder';
 
@@ -12,11 +13,13 @@ const FilesList: React.FC = () => {
   };
 
   return (
-    <DragAndDropContainer onDrop={addFiles}>
-      <div style={{ flex: 1, overflowX: 'hidden', overflow: 'scroll' }}>
-        {files.map(renderFile)}
-      </div>
-    </DragAndDropContainer>
+    <Layout>
+      <DragAndDropContainer onDrop={addFiles}>
+        <div style={{ flex: 1, overflowX: 'hidden', overflow: 'scroll' }}>
+          {files.map(renderFile)}
+        </div>
+      </DragAndDropContainer>
+    </Layout>
   );
 };
 

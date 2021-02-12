@@ -1,14 +1,9 @@
 import React from 'react';
 import './App.css';
-import Layout from './components/Layout';
-import FilesList from './screens/FilesList';
+import Navigation from './Navigation';
 
 const App = (): JSX.Element => {
-  return (
-    <Layout>
-      <FilesList />
-    </Layout>
-  );
+  return <Navigation />;
 };
 
 export default App;
